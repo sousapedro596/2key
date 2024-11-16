@@ -9,6 +9,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
+            overflow-x: hidden;
         }
         #connectButton, #clearButton {
             font-size: 1.5em;
@@ -18,6 +19,9 @@
         #letterDisplay {
             font-size: 5em;
             margin: 20px;
+            word-wrap: break-word;
+            max-width: 90vw;
+            overflow-wrap: break-word;
         }
         .blinking {
             animation: blink 1s infinite;
