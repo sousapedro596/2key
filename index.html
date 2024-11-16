@@ -10,9 +10,10 @@
             text-align: center;
             margin-top: 50px;
         }
-        #connectButton {
+        #connectButton, #clearButton {
             font-size: 1.5em;
             padding: 10px 20px;
+            width: 200px;
         }
         #letterDisplay {
             font-size: 5em;
@@ -30,6 +31,7 @@
 </head>
 <body>
     <button id="connectButton">Connect to Bluetooth</button>
+    <button id="clearButton">Clear All Letters</button>
     <div id="letterDisplay">A</div>
     <script>
         const BUTTON_SERVICE_UUID = '12345678-fffa-5678-1234-56789abcdef0';
@@ -73,7 +75,7 @@
                 const service = await server.getPrimaryService(BUTTON_SERVICE_UUID);
 
                 // Subscribe to Button 1 Characteristic
-                const button1Char = await service.getCharacteristic(BUTTON1_CHAR_UUID);
+                const button1Char = await service.getCharacteristic(BUTTON2_CHAR_UUID);
                 await button1Char.startNotifications();
                 button1Char.addEventListener('characteristicvaluechanged', (event) => {
                     const value = event.target.value.getUint8(0);
@@ -96,7 +98,7 @@
                 });
 
                 // Subscribe to Button 2 Characteristic
-                const button2Char = await service.getCharacteristic(BUTTON2_CHAR_UUID);
+                const button2Char = await service.getCharacteristic(BUTTON1_CHAR_UUID);
                 await button2Char.startNotifications();
                 button2Char.addEventListener('characteristicvaluechanged', (event) => {
                     const value = event.target.value.getUint8(0);
@@ -152,6 +154,13 @@
             } else {
                 connectBluetooth();
             }
+        });
+
+        document.getElementById('clearButton').addEventListener('click', () => {
+            currentWord = ['A'];
+            currentLetterIndex = 0;
+            updateDisplay();
+            console.log('All letters cleared.');
         });
     </script>
 </body>
